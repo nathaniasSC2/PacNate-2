@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PacNate - Classic Pac-Man</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>🎮 PacNate</h1>
+            <p class="tagline">Quick Pac-Man sessions for 5-10 minute breaks!</p>
+        </header>
+
+        <div class="game-info">
+            <div class="info-item">
+                <span class="label">Score:</span>
+                <span id="score" class="value">0</span>
+            </div>
+            <div class="info-item">
+                <span class="label">High Score:</span>
+                <span id="highScore" class="value">0</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Level:</span>
+                <span id="level" class="value">1</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Lives:</span>
+                <span id="lives" class="value">❤️❤️❤️</span>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="560" height="620"></canvas>
+            <div id="gameOverlay" class="overlay">
+                <div class="overlay-content">
+                    <h2 id="overlayTitle">PacNate</h2>
+                    <p id="overlayMessage">Press SPACE to start!</p>
+                    <div class="controls-hint">
+                        <p><strong>Controls:</strong></p>
+                        <p>Arrow Keys or WASD to move</p>
+                        <p>SPACE to pause/resume</p>
+                        <p>M to toggle sound</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <button id="pauseBtn" class="btn">⏸️ Pause</button>
+            <button id="soundBtn" class="btn">🔊 Sound: ON</button>
+            <button id="restartBtn" class="btn">🔄 Restart</button>
+        </div>
+
+        <footer>
+            <p>Classic Pac-Man gameplay optimized for quick sessions</p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
