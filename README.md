@@ -1,126 +1,266 @@
-# PacNate 🎮
+# PacNate 🎮⚡
 
-A modern, polished Pac-Man game optimized for quick 5-10 minute gaming sessions. Perfect for when you need a quick distraction or break!
+**The Bejeweled Blitz of Pac-Man** - A roguelike Pac-Man game with bite-sized maps, random generation, and escalating challenge. Perfect for quick 5-10 minute gaming sessions!
 
-## Features
+## 🎯 Game Overview
 
-- **Classic Gameplay**: Traditional Pac-Man mechanics with smooth controls
-- **Quick Sessions**: Each game naturally lasts 5-10 minutes, perfect for short breaks
-- **Progressive Difficulty**: Each level increases in speed and challenge
-- **Smart Ghost AI**: Four ghosts with different personalities (Chase, Ambush, Patrol, Random)
-- **Power-Ups**: Eat power pellets to turn the tables on ghosts
-- **Local High Scores**: Track your best scores across sessions
-- **Pause/Resume**: Flexible gameplay - pause anytime
-- **Responsive Design**: Works on desktop and mobile devices
-- **Keyboard & Button Controls**: Multiple input methods
-- **Sound Toggle**: Play with or without sound effects
+PacNate Blitz transforms classic Pac-Man into an exciting roguelike experience with:
+- **10 Levels to Victory**: Beat all 10 progressively harder levels to win!
+- **8 Unique Map Templates**: Random selection each level keeps every run fresh
+- **Roguelike Progression**: Dynamic difficulty with more ghosts and faster speeds
+- **Portal System**: Teleport across the map for tactical advantages
+- **Looping Map Patterns**: Bite-sized 15x15 mazes designed for quick completion
 
-## How to Play
+## ✨ Roguelike Features
+
+### 🗺️ **Random Map Generation**
+- 8 hand-crafted map templates with unique layouts
+- New random map each level (no repeats until all seen)
+- Maps include: Classic Loop, Double Loop, Spiral, Cross, Diamond, Maze Runner, Quarters, Gauntlet
+
+### 🌀 **Portal System**
+- Purple pulsing portals scattered across maps
+- Teleport to random other portal on touch
+- +25 points per portal use
+- Strategic escapes from ghosts or shortcuts to pellets
+
+### 👻 **Progressive Ghost Spawning**
+- **Levels 1-2**: 2 ghosts (manageable warmup)
+- **Levels 3-4**: 3 ghosts (moderate challenge)
+- **Levels 5-7**: 4 ghosts (intense action)
+- **Levels 8-10**: 5 ghosts (maximum chaos!)
+
+### ⚡ **Escalating Difficulty**
+- Speed increases +15% per level for Pac-Man and ghosts
+- Power pellet duration decreases (-800ms per level, min 2s)
+- Ghost points scale with level (200 × level)
+- Level completion bonus: 500 points per level
+
+### 🏆 **Victory Condition**
+- Complete all 10 levels = WIN!
+- Massive bonus score for completion
+- High score tracking across runs
+
+## 🎮 How to Play
 
 ### Starting the Game
 
-1. Open `index.html` in your web browser
-2. Press **SPACE** or click anywhere to start
+1. Open `index.html` in your browser
+2. Press **SPACE** to begin your run
+3. Clear all pellets to advance to next level
+4. Beat level 10 to achieve victory!
 
 ### Controls
 
 **Keyboard:**
 - **Arrow Keys** or **WASD**: Move Pac-Man
-- **SPACE**: Start game / Pause / Resume
+- **SPACE**: Pause/Resume (or start new run after game over)
 - **M**: Toggle sound on/off
 
-**Mouse/Touch:**
-- Click the **Pause** button to pause/resume
-- Click **Sound** button to toggle audio
-- Click **Restart** button to start a new game
+**Buttons:**
+- **Pause**: Pause/resume gameplay
+- **Sound**: Toggle audio
+- **Restart**: Start a fresh run from level 1
 
-### Gameplay
+## 🎯 Gameplay Mechanics
 
-- **Objective**: Eat all pellets to complete the level
-- **Pellets**: Small dots worth 10 points each
-- **Power Pellets**: Large dots in corners worth 50 points - makes ghosts vulnerable for 10 seconds
-- **Ghosts**: Avoid ghosts or they'll cost you a life. When powered up, eat them for 200 points!
-- **Lives**: You start with 3 lives. Game over when all lives are lost
-- **Levels**: Each level gets progressively faster
-
-### Ghost Personalities
-
-- **Red Ghost (Chase)**: Directly chases Pac-Man
-- **Pink Ghost (Ambush)**: Tries to get ahead of Pac-Man
-- **Cyan Ghost (Patrol)**: Patrols between corners
-- **Orange Ghost (Random)**: Moves randomly, unpredictable
-
-### Scoring
-
+### Scoring System
 - **Small Pellet**: 10 points
 - **Power Pellet**: 50 points
-- **Ghost (when powered up)**: 200 points
+- **Portal Use**: 25 points
+- **Ghost (powered up)**: 200 × current level points
+- **Level Completion**: 500 bonus points
 
-## Quick Setup
+### Power Pellets
+- Turn ghosts blue and vulnerable
+- Duration: 8 seconds (level 1) → 2 seconds (level 10)
+- Eat ghosts for big points while powered up
+- Ghosts respawn at spawn points after being eaten
 
-Simply open `index.html` in any modern web browser. No installation or build process required!
+### Lives System
+- Start with 3 lives (❤️❤️❤️)
+- Lose a life when touching a ghost (unless powered up)
+- Game over when all lives lost
+- Positions reset after losing a life
 
+### Portal Mechanics
+- Walk over purple pulsing circles to teleport
+- Randomly sends you to another portal on the map
+- Can't teleport to the same portal you entered
+- Grants points and escapes danger
+
+## 🗺️ Map Types
+
+Each map has unique characteristics:
+
+1. **Classic Loop**: Simple ring with central obstacles - great for beginners
+2. **Double Loop**: Two connected rings - multiple path choices
+3. **Spiral**: Inward spiral pattern - tricky navigation
+4. **Cross**: Plus-sign layout with portal shortcuts
+5. **Diamond**: Diagonal patterns - unique movement flow
+6. **Maze Runner**: Tight corridors - challenging navigation
+7. **Quarters**: Four zones connected by center - strategic play
+8. **The Gauntlet**: Long corridors packed with ghosts - test of skill
+
+## 👻 Ghost AI Personalities
+
+- **Red Ghost (Chase)**: Directly pursues Pac-Man
+- **Pink Ghost (Ambush)**: Aims 4 tiles ahead of Pac-Man
+- **Cyan Ghost (Patrol)**: Patrols between map corners
+- **Orange Ghost (Random)**: Unpredictable scatter behavior
+- **Purple Ghost** (levels 8-10): Additional chaser
+
+## 🎲 Roguelike Elements
+
+### What Makes This Roguelike?
+- ✅ **Randomization**: Different map each level
+- ✅ **Progression**: Difficulty scales throughout run
+- ✅ **Permanent Death**: Game over = start from level 1
+- ✅ **Session-Based**: Complete 10-level run in one sitting
+- ✅ **Variety**: 8 maps × random order = unique every time
+- ✅ **High Stakes**: Lives are precious, play carefully
+
+### Run Variance
+No two runs are the same:
+- Map order is randomized
+- Ghost spawn positions vary per map
+- Your strategy must adapt to each map's layout
+- Portal locations create different tactical options
+
+## 💡 Strategy Tips
+
+### Early Game (Levels 1-3)
+- Learn map layouts and portal locations
+- Take your time, clear systematically
+- Save power pellets for when ghosts cluster
+- Practice portal usage without pressure
+
+### Mid Game (Levels 4-7)
+- Speed is increasing - make decisive moves
+- Use portals defensively to escape danger
+- Clear pellets near power pellets last
+- Lead ghosts away before collecting clusters
+
+### Late Game (Levels 8-10)
+- Extremely fast - precision is critical
+- 5 ghosts = use every tactical tool
+- Power pellets are shorter - time carefully
+- Portals are essential for survival
+- Don't get greedy - survival > points
+
+### Advanced Tactics
+- **Portal Chains**: Use multiple portals in sequence for escapes
+- **Ghost Herding**: Group ghosts before power pellet
+- **Pattern Recognition**: Learn map-specific routes
+- **Risk Management**: Know when to retreat vs. push forward
+- **Power Timing**: Save power pellets for clutch moments
+
+## 🏆 Winning the Game
+
+**Victory Requirements:**
+- Complete all 10 levels without losing all lives
+- Each level must be fully cleared (all pellets eaten)
+- No time limit - focus on survival and completion
+
+**Victory Rewards:**
+- Special victory screen
+- Massive completion bonus (5000 points!)
+- High score saves if new personal best
+- Bragging rights!
+
+## 🚀 Quick Setup
+
+### Browser Play (Instant)
+Simply open `index.html` in any modern browser. No installation needed!
+
+### Local Server (Optional)
 ```bash
-# Using Python's built-in server
+# Python
 python -m http.server 8000
 
-# Or using Node.js
+# Node.js
 npx http-server
 
 # Then visit: http://localhost:8000
 ```
 
-## Game Design Choices
+## 🎨 Technical Details
 
-This game is specifically designed for quick sessions:
+### Built With
+- **Pure Vanilla JavaScript**: No frameworks or dependencies
+- **HTML5 Canvas**: Smooth 60 FPS rendering
+- **LocalStorage**: Persistent high score tracking
+- **Responsive Design**: Works on desktop and tablet
 
-1. **Balanced Difficulty**: Starts easy but ramps up gradually
-2. **Clear Progression**: Visual feedback for score, lives, and level
-3. **No Grinding**: Each level is completable in 2-3 minutes
-4. **Instant Restart**: Quick reset to jump right back in
-5. **Saved Progress**: High scores persist across sessions
+### Performance
+- Optimized collision detection
+- Efficient pathfinding for ghost AI
+- Smooth animations at 60 FPS
+- Small file size (~30KB total)
 
-## Browser Compatibility
-
-Works best in modern browsers:
+### Browser Compatibility
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
-## Tips for Best Experience
+## 🎯 Session Design Philosophy
 
-- **Full Screen**: Press F11 for immersive gameplay
-- **Clear Mind**: Each session is a fresh start - focus on the current game
-- **Learn Patterns**: Ghost AI is consistent - learn their behaviors
-- **Corner Power**: Use power pellets strategically when ghosts are nearby
-- **Quick Breaks**: Perfect for 5-10 minute breaks between work sessions
+PacNate Blitz is designed around the "Bejeweled Blitz" philosophy:
 
-## Technical Details
+- **Quick Sessions**: 30-60 seconds per level = 5-10 minute full runs
+- **Immediate Action**: No menus or setup, just press space
+- **Rising Tension**: Difficulty curve keeps you engaged
+- **High Replayability**: Random maps = never gets stale
+- **Skill Progression**: Learn patterns and improve over time
+- **Clear Goal**: Beat level 10 = definitive win condition
 
-- **Pure Vanilla JS**: No frameworks or dependencies
-- **Canvas Rendering**: Smooth 60 FPS gameplay
-- **LocalStorage**: Persistent high score tracking
-- **Responsive Design**: Adapts to different screen sizes
-- **Optimized Performance**: Efficient collision detection and rendering
+Perfect for:
+- Coffee breaks
+- Between meetings
+- Quick mental reset
+- Score chasing
+- Improving personal bests
 
-## Future Enhancements (Ideas)
+## 📊 Difficulty Progression
 
-- Fruit bonuses for extra points
-- Different maze layouts
-- Online leaderboards
-- Mobile touch controls
-- Custom difficulty settings
+| Level | Ghosts | Speed Mult | Power Duration | Intensity |
+|-------|--------|------------|----------------|-----------|
+| 1     | 2      | 1.0x       | 8.0s           | ⭐        |
+| 2     | 2      | 1.15x      | 7.2s           | ⭐        |
+| 3     | 3      | 1.3x       | 6.4s           | ⭐⭐      |
+| 4     | 3      | 1.45x      | 5.6s           | ⭐⭐      |
+| 5     | 4      | 1.6x       | 4.8s           | ⭐⭐⭐    |
+| 6     | 4      | 1.75x      | 4.0s           | ⭐⭐⭐    |
+| 7     | 4      | 1.9x       | 3.2s           | ⭐⭐⭐⭐  |
+| 8     | 5      | 2.05x      | 2.4s           | ⭐⭐⭐⭐  |
+| 9     | 5      | 2.2x       | 2.0s           | ⭐⭐⭐⭐⭐|
+| 10    | 5      | 2.35x      | 2.0s           | ⭐⭐⭐⭐⭐|
+
+## 🔮 Future Enhancement Ideas
+
+- Additional map templates
+- Different tile types (speed boosts, etc.)
+- Ghost modifiers (faster chase ghost, etc.)
+- Daily challenge mode with fixed seed
+- Leaderboard system
 - Achievement system
+- Multiple difficulty modes
+- Endless mode after victory
 
-## Credits
+## 🎮 Credits
 
-Inspired by the classic Pac-Man arcade game by Namco (1980). This is a modern recreation built from scratch for quick, casual gaming sessions.
+Inspired by:
+- **Pac-Man** (Namco, 1980) - The original arcade classic
+- **Bejeweled Blitz** (PopCap) - Fast session design philosophy
+- **Roguelike games** - Randomization and progression systems
 
-## License
+Built from scratch as a modern web game optimized for quick, addictive gameplay sessions.
 
-Free to use for personal enjoyment. Have fun!
+## 📝 License
+
+Free to use for personal enjoyment. Have fun conquering all 10 levels!
 
 ---
 
-**Enjoy your quick Pac-Man sessions! 🟡👻**
+**Ready to start your run? Press SPACE and go! 🟡👻⚡**

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PacNate - Classic Pac-Man</title>
+    <title>PacNate - Roguelike Blitz</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-container">
         <header>
             <h1>🎮 PacNate</h1>
-            <p class="tagline">Quick Pac-Man sessions for 5-10 minute breaks!</p>
+            <p class="tagline">Roguelike Blitz Mode - Beat 10 Levels!</p>
         </header>
 
         <div class="game-info">
@@ -33,16 +33,21 @@
         </div>
 
         <div class="canvas-container">
-            <canvas id="gameCanvas" width="560" height="620"></canvas>
+            <canvas id="gameCanvas" width="420" height="420"></canvas>
             <div id="gameOverlay" class="overlay">
                 <div class="overlay-content">
-                    <h2 id="overlayTitle">PacNate</h2>
-                    <p id="overlayMessage">Press SPACE to start!</p>
+                    <h2 id="overlayTitle">PacNate Blitz</h2>
+                    <p id="overlayMessage">Press SPACE to start your run!</p>
                     <div class="controls-hint">
+                        <p><strong>Roguelike Features:</strong></p>
+                        <p>🗺️ Random maps each level</p>
+                        <p>🌀 Teleport through portals</p>
+                        <p>👻 More ghosts as you progress (2-5)</p>
+                        <p>⚡ Faster speeds each level</p>
+                        <p>🏆 Beat all 10 levels to win!</p>
+                        <hr style="margin: 10px 0; border-color: rgba(255,255,255,0.3);">
                         <p><strong>Controls:</strong></p>
-                        <p>Arrow Keys or WASD to move</p>
-                        <p>SPACE to pause/resume</p>
-                        <p>M to toggle sound</p>
+                        <p>Arrow Keys or WASD • SPACE pause • M toggle sound</p>
                     </div>
                 </div>
             </div>
@@ -55,7 +60,7 @@
         </div>
 
         <footer>
-            <p>Classic Pac-Man gameplay optimized for quick sessions</p>
+            <p>Roguelike Pac-Man Blitz - Every run is different!</p>
         </footer>
     </div>
 

@@ -1,67 +1,206 @@
-// Game Configuration
+// Game Configuration - Roguelike Blitz Mode
 const CONFIG = {
-    tileSize: 20,
+    tileSize: 28,
     fps: 60,
-    pacmanSpeed: 2,
-    ghostSpeed: 1.8,
-    frightenedGhostSpeed: 1,
-    frightenedDuration: 10000, // 10 seconds
+    mapSize: 15, // Bite-sized maps
+    maxLevel: 10, // Win after level 10!
+    pacmanBaseSpeed: 2.5,
+    ghostBaseSpeed: 2,
+    frightenedGhostSpeed: 1.2,
+    baseFrightenedDuration: 8000, // 8 seconds at level 1
     pointsPerPellet: 10,
     pointsPerPowerPellet: 50,
     pointsPerGhost: 200,
-    levelSpeedIncrease: 0.2,
-    maxLives: 3
+    pointsPerPortal: 25,
+    levelCompletionBonus: 500,
+    maxLives: 3,
+    speedIncreasePerLevel: 0.15,
+    frightenedDecreasePerLevel: 800,
+    ghostIncreaseSchedule: [2, 2, 3, 3, 4, 4, 4, 5, 5, 5] // ghosts per level
 };
 
-// Game Map (0=wall, 1=pellet, 2=power pellet, 3=empty, 4=ghost house)
-const MAP = [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0],
-    [0,2,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0],
-    [0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0],
-    [0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0],
-    [0,1,1,1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,0],
-    [0,0,0,0,0,0,1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,3,3,3,3,3,3,3,3,3,3,0,0,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,3,0,0,0,4,4,0,0,0,3,0,0,1,0,0,0,0,0,0],
-    [3,3,3,3,3,3,1,3,3,3,0,4,4,4,4,4,4,0,3,3,3,1,3,3,3,3,3,3],
-    [0,0,0,0,0,0,1,0,0,3,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,3,3,3,3,3,3,3,3,3,3,0,0,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,3,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0],
-    [0,2,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,2,0],
-    [0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0],
-    [0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0],
-    [0,1,1,1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,0],
-    [0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0],
-    [0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+// Bite-sized Map Templates with Looping Patterns and Portals
+// 0=wall, 1=pellet, 2=power pellet, 3=empty, 4=ghost spawn, 5=portal
+const MAP_TEMPLATES = [
+    // Map 1: Classic Loop - Simple outer ring with center obstacles
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,1,1,1,0,1,1,1,1,1,2,0],
+        [0,1,0,0,1,0,1,1,1,0,1,0,0,1,0],
+        [0,1,0,4,1,0,1,0,1,0,1,4,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,1,0,0,0,4,0,0,0,1,0,1,0],
+        [0,1,1,1,1,1,0,0,0,1,1,1,1,1,0],
+        [0,5,1,0,1,0,0,4,0,0,1,0,1,5,0],
+        [0,1,1,1,1,1,0,0,0,1,1,1,1,1,0],
+        [0,1,0,1,0,0,0,4,0,0,0,1,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,4,1,0,1,0,1,0,1,4,0,1,0],
+        [0,1,0,0,1,0,1,1,1,0,1,0,0,1,0],
+        [0,2,1,1,1,1,1,0,1,1,1,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 2: Double Loop - Two connected rings
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,1,5,1,5,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,1,0,1,0,0,0,1,0],
+        [0,1,0,2,0,1,0,4,0,1,0,2,0,1,0],
+        [0,1,0,0,0,1,1,1,1,1,0,0,0,1,0],
+        [0,1,1,1,1,1,0,0,0,1,1,1,1,1,0],
+        [0,1,0,1,0,0,4,0,4,0,0,1,0,1,0],
+        [0,1,1,1,1,1,0,4,0,1,1,1,1,1,0],
+        [0,1,0,1,0,0,4,0,4,0,0,1,0,1,0],
+        [0,1,1,1,1,1,0,0,0,1,1,1,1,1,0],
+        [0,1,0,0,0,1,1,1,1,1,0,0,0,1,0],
+        [0,1,0,2,0,1,0,4,0,1,0,2,0,1,0],
+        [0,1,0,0,0,1,0,1,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,5,1,5,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 3: Spiral Pattern
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,1,1,1,1,1,1,1,1,1,2,0],
+        [0,1,0,0,0,0,0,0,0,0,0,0,0,1,0],
+        [0,1,0,1,1,1,1,1,1,1,1,1,0,1,0],
+        [0,1,0,1,0,0,0,0,0,0,0,1,0,1,0],
+        [0,1,0,1,0,1,1,1,1,1,0,1,0,1,0],
+        [0,5,0,1,0,1,0,4,0,1,0,1,0,5,0],
+        [0,1,0,1,0,1,0,4,0,1,0,1,0,1,0],
+        [0,1,0,1,0,1,0,4,0,1,0,1,0,1,0],
+        [0,1,0,1,0,1,1,1,1,1,0,1,0,1,0],
+        [0,1,0,1,0,0,0,0,0,0,0,1,0,1,0],
+        [0,1,0,1,1,1,1,1,1,1,1,1,0,1,0],
+        [0,1,0,0,0,0,0,0,0,0,0,0,0,1,0],
+        [0,2,1,1,1,1,1,1,1,1,1,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 4: Cross Pattern with Portals
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,1,0,1,1,1,0,1,1,1,2,0],
+        [0,1,0,0,1,0,1,5,1,0,1,0,0,1,0],
+        [0,1,0,4,1,0,1,1,1,0,1,4,0,1,0],
+        [0,1,1,1,1,0,0,1,0,0,1,1,1,1,0],
+        [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
+        [0,1,1,1,0,1,0,0,0,1,0,1,1,1,0],
+        [0,5,1,1,1,1,0,4,0,1,1,1,1,5,0],
+        [0,1,1,1,0,1,0,0,0,1,0,1,1,1,0],
+        [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
+        [0,1,1,1,1,0,0,1,0,0,1,1,1,1,0],
+        [0,1,0,4,1,0,1,1,1,0,1,4,0,1,0],
+        [0,1,0,0,1,0,1,5,1,0,1,0,0,1,0],
+        [0,2,1,1,1,0,1,1,1,0,1,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 5: Diamond Loop
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,1,1,2,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,1,0,1,0,0,0,1,0],
+        [0,1,0,4,1,1,0,1,0,1,1,4,0,1,0],
+        [0,1,1,1,0,1,0,1,0,1,0,1,1,1,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,0,1,0,1,0,5,0,1,0,1,0,1,0],
+        [0,5,1,1,1,1,1,4,1,1,1,1,1,5,0],
+        [0,1,0,1,0,1,0,5,0,1,0,1,0,1,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,1,1,0,1,0,1,0,1,0,1,1,1,0],
+        [0,1,0,4,1,1,0,1,0,1,1,4,0,1,0],
+        [0,1,0,0,0,1,0,1,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,1,2,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 6: Maze Runner - Tight corridors
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,0,1,1,1,5,1,1,1,0,1,2,0],
+        [0,1,1,0,1,0,1,0,1,0,1,0,1,1,0],
+        [0,0,1,0,1,0,1,0,1,0,1,0,1,0,0],
+        [0,1,1,1,1,0,1,1,1,0,1,1,1,1,0],
+        [0,1,0,0,0,0,1,4,1,0,0,0,0,1,0],
+        [0,1,1,1,1,1,1,4,1,1,1,1,1,1,0],
+        [0,5,0,1,4,1,0,4,0,1,4,1,0,5,0],
+        [0,1,1,1,1,1,1,4,1,1,1,1,1,1,0],
+        [0,1,0,0,0,0,1,4,1,0,0,0,0,1,0],
+        [0,1,1,1,1,0,1,1,1,0,1,1,1,1,0],
+        [0,0,1,0,1,0,1,0,1,0,1,0,1,0,0],
+        [0,1,1,0,1,0,1,0,1,0,1,0,1,1,0],
+        [0,2,1,0,1,1,1,5,1,1,1,0,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 7: Quarters - Four separate zones
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,1,0,5,1,5,0,1,1,1,2,0],
+        [0,1,0,0,1,0,1,1,1,0,1,0,0,1,0],
+        [0,1,0,4,1,0,0,1,0,0,1,4,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,1,0,0,1,0,0,1,0,0,0,0],
+        [0,1,1,1,1,1,1,4,1,1,1,1,1,1,0],
+        [0,5,1,1,1,1,1,4,1,1,1,1,1,5,0],
+        [0,1,1,1,1,1,1,4,1,1,1,1,1,1,0],
+        [0,0,0,0,1,0,0,1,0,0,1,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,4,1,0,0,1,0,0,1,4,0,1,0],
+        [0,1,0,0,1,0,1,1,1,0,1,0,0,1,0],
+        [0,2,1,1,1,0,5,1,5,0,1,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 8: The Gauntlet - Long corridors with danger
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,1,1,1,1,1,1,1,1,1,2,0],
+        [0,1,0,1,0,1,0,5,0,1,0,1,0,1,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,1,0,0,0,1,4,1,0,0,0,1,0,0],
+        [0,1,1,1,4,1,1,4,1,1,4,1,1,1,0],
+        [0,5,1,1,1,1,1,4,1,1,1,1,1,5,0],
+        [0,1,1,1,4,1,1,4,1,1,4,1,1,1,0],
+        [0,0,1,0,0,0,1,4,1,0,0,0,1,0,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,0,1,0,1,0,5,0,1,0,1,0,1,0],
+        [0,2,1,1,1,1,1,1,1,1,1,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ]
 ];
 
-// Game State
+// Game State - Roguelike Edition
 class Game {
     constructor() {
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
-        this.state = 'start'; // start, playing, paused, gameover
+
+        // Adjust canvas size for 15x15 map
+        this.canvas.width = CONFIG.mapSize * CONFIG.tileSize;
+        this.canvas.height = CONFIG.mapSize * CONFIG.tileSize;
+
+        this.state = 'start'; // start, playing, paused, gameover, victory
         this.score = 0;
         this.highScore = parseInt(localStorage.getItem('pacnate-highscore')) || 0;
         this.level = 1;
         this.lives = CONFIG.maxLives;
         this.soundEnabled = true;
 
-        this.map = this.createMap();
+        this.map = null;
+        this.mapTemplate = null;
         this.pacman = null;
         this.ghosts = [];
+        this.portals = [];
         this.pelletsRemaining = 0;
         this.frightenedMode = false;
         this.frightenedTimer = 0;
+        this.usedMaps = []; // Track which maps have been used this run
 
         this.keys = {};
         this.lastTime = 0;
@@ -70,26 +209,92 @@ class Game {
     }
 
     init() {
-        this.initializeGame();
+        this.initializeLevel();
         this.setupEventListeners();
         this.updateUI();
         this.gameLoop(0);
     }
 
-    createMap() {
-        return MAP.map(row => [...row]);
+    selectRandomMap() {
+        // If all maps used, reset the pool
+        if (this.usedMaps.length >= MAP_TEMPLATES.length) {
+            this.usedMaps = [];
+        }
+
+        // Select a map not recently used
+        let availableMaps = [];
+        for (let i = 0; i < MAP_TEMPLATES.length; i++) {
+            if (!this.usedMaps.includes(i)) {
+                availableMaps.push(i);
+            }
+        }
+
+        const mapIndex = availableMaps[Math.floor(Math.random() * availableMaps.length)];
+        this.usedMaps.push(mapIndex);
+        return MAP_TEMPLATES[mapIndex];
     }
 
-    initializeGame() {
-        this.map = this.createMap();
+    createMap(template) {
+        return template.map(row => [...row]);
+    }
+
+    initializeLevel() {
+        // Select random map for this level
+        this.mapTemplate = this.selectRandomMap();
+        this.map = this.createMap(this.mapTemplate);
+
+        // Find portals
+        this.portals = [];
+        for (let row = 0; row < this.map.length; row++) {
+            for (let col = 0; col < this.map[row].length; col++) {
+                if (this.map[row][col] === 5) {
+                    this.portals.push({x: col + 0.5, y: row + 0.5});
+                }
+            }
+        }
+
+        // Find pacman start position (first empty corridor)
+        let startX = 7.5, startY = 7.5;
+        for (let row = 0; row < this.map.length; row++) {
+            for (let col = 0; col < this.map[row].length; col++) {
+                if (this.map[row][col] === 1) {
+                    startX = col + 0.5;
+                    startY = row + 0.5;
+                    break;
+                }
+            }
+            if (startX !== 7.5) break;
+        }
+
         this.pelletsRemaining = this.countPellets();
-        this.pacman = new Pacman(13.5, 19);
-        this.ghosts = [
-            new Ghost(11.5, 13, 'red', 'chase'),
-            new Ghost(13.5, 13, 'pink', 'ambush'),
-            new Ghost(15.5, 13, 'cyan', 'patrol'),
-            new Ghost(13.5, 15, 'orange', 'random')
-        ];
+        this.pacman = new Pacman(startX, startY);
+
+        // Spawn ghosts based on level
+        const ghostCount = CONFIG.ghostIncreaseSchedule[Math.min(this.level - 1, CONFIG.ghostIncreaseSchedule.length - 1)];
+        this.ghosts = [];
+
+        const ghostSpawns = [];
+        for (let row = 0; row < this.map.length; row++) {
+            for (let col = 0; col < this.map[row].length; col++) {
+                if (this.map[row][col] === 4) {
+                    ghostSpawns.push({x: col + 0.5, y: row + 0.5});
+                }
+            }
+        }
+
+        const ghostColors = ['red', 'pink', 'cyan', 'orange', 'purple'];
+        const ghostPersonalities = ['chase', 'ambush', 'patrol', 'random', 'chase'];
+
+        for (let i = 0; i < Math.min(ghostCount, ghostSpawns.length); i++) {
+            const spawn = ghostSpawns[i % ghostSpawns.length];
+            this.ghosts.push(new Ghost(
+                spawn.x,
+                spawn.y,
+                ghostColors[i % ghostColors.length],
+                ghostPersonalities[i % ghostPersonalities.length]
+            ));
+        }
+
         this.frightenedMode = false;
         this.frightenedTimer = 0;
     }
@@ -117,7 +322,7 @@ class Game {
                     this.pauseGame();
                 } else if (this.state === 'paused') {
                     this.resumeGame();
-                } else if (this.state === 'gameover') {
+                } else if (this.state === 'gameover' || this.state === 'victory') {
                     this.restartGame();
                 }
             }
@@ -168,7 +373,8 @@ class Game {
         this.score = 0;
         this.level = 1;
         this.lives = CONFIG.maxLives;
-        this.initializeGame();
+        this.usedMaps = [];
+        this.initializeLevel();
         this.state = 'playing';
         this.hideOverlay();
         this.updateUI();
@@ -186,15 +392,38 @@ class Game {
         this.updateUI();
     }
 
+    victory() {
+        this.state = 'victory';
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+            localStorage.setItem('pacnate-highscore', this.highScore);
+        }
+        this.showOverlay('🏆 VICTORY! 🏆', `You beat all ${CONFIG.maxLevel} levels! Score: ${this.score}. Press SPACE to play again!`);
+        this.updateUI();
+    }
+
     nextLevel() {
         this.level++;
-        this.initializeGame();
-        this.showOverlay(`Level ${this.level}!`, 'Get ready...', 2000);
+
+        // Check for victory
+        if (this.level > CONFIG.maxLevel) {
+            // Add completion bonus
+            this.score += CONFIG.levelCompletionBonus * CONFIG.maxLevel;
+            this.updateUI();
+            this.victory();
+            return;
+        }
+
+        // Add level bonus
+        this.score += CONFIG.levelCompletionBonus;
+        this.initializeLevel();
+        this.showOverlay(`Level ${this.level}!`, `Get ready... ${CONFIG.ghostIncreaseSchedule[this.level - 1]} ghosts incoming!`, 2000);
         setTimeout(() => {
-            if (this.state !== 'gameover') {
+            if (this.state !== 'gameover' && this.state !== 'victory') {
                 this.hideOverlay();
             }
         }, 2000);
+        this.updateUI();
     }
 
     toggleSound() {
@@ -220,7 +449,7 @@ class Game {
     updateUI() {
         document.getElementById('score').textContent = this.score;
         document.getElementById('highScore').textContent = this.highScore;
-        document.getElementById('level').textContent = this.level;
+        document.getElementById('level').textContent = `${this.level}/${CONFIG.maxLevel}`;
         document.getElementById('lives').textContent = '❤️'.repeat(Math.max(0, this.lives));
     }
 
@@ -253,8 +482,8 @@ class Game {
             }
         }
 
-        // Update Pacman
-        const speed = CONFIG.pacmanSpeed + (this.level - 1) * CONFIG.levelSpeedIncrease;
+        // Update Pacman with level-based speed
+        const speed = CONFIG.pacmanBaseSpeed + (this.level - 1) * CONFIG.speedIncreasePerLevel;
         this.pacman.update(this.map, speed);
 
         // Check pellet collision
@@ -270,19 +499,22 @@ class Game {
             this.pelletsRemaining--;
             this.activatePowerMode();
             this.updateUI();
+        } else if (tile === 5) {
+            // Portal - teleport to another portal
+            this.usePortal();
         }
 
-        // Update Ghosts
+        // Update Ghosts with level-based speed
         const ghostSpeed = this.frightenedMode ? CONFIG.frightenedGhostSpeed :
-                          CONFIG.ghostSpeed + (this.level - 1) * CONFIG.levelSpeedIncrease * 0.5;
+                          CONFIG.ghostBaseSpeed + (this.level - 1) * CONFIG.speedIncreasePerLevel * 0.5;
         this.ghosts.forEach(ghost => {
             ghost.update(this.map, this.pacman, ghostSpeed);
 
             // Check ghost collision
             if (this.checkCollision(this.pacman, ghost)) {
-                if (this.frightenedMode) {
+                if (this.frightenedMode && ghost.frightened) {
                     this.eatGhost(ghost);
-                } else {
+                } else if (!ghost.frightened) {
                     this.loseLive();
                 }
             }
@@ -294,16 +526,45 @@ class Game {
         }
     }
 
+    usePortal() {
+        // Find nearest portal
+        let nearestPortal = null;
+        let minDist = 0.5;
+
+        for (let portal of this.portals) {
+            const dx = this.pacman.x - portal.x;
+            const dy = this.pacman.y - portal.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < minDist) {
+                nearestPortal = portal;
+                minDist = dist;
+            }
+        }
+
+        if (nearestPortal) {
+            // Find a different portal to teleport to
+            const otherPortals = this.portals.filter(p => p !== nearestPortal);
+            if (otherPortals.length > 0) {
+                const targetPortal = otherPortals[Math.floor(Math.random() * otherPortals.length)];
+                this.pacman.x = targetPortal.x;
+                this.pacman.y = targetPortal.y;
+                this.score += CONFIG.pointsPerPortal;
+                this.updateUI();
+            }
+        }
+    }
+
     activatePowerMode() {
+        const duration = CONFIG.baseFrightenedDuration - (this.level - 1) * CONFIG.frightenedDecreasePerLevel;
         this.frightenedMode = true;
-        this.frightenedTimer = CONFIG.frightenedDuration;
+        this.frightenedTimer = Math.max(duration, 2000); // Minimum 2 seconds
         this.ghosts.forEach(ghost => ghost.frightened = true);
     }
 
     eatGhost(ghost) {
-        this.score += CONFIG.pointsPerGhost;
+        this.score += CONFIG.pointsPerGhost * this.level; // More points at higher levels
         this.updateUI();
-        ghost.reset();
+        ghost.respawn();
     }
 
     loseLive() {
@@ -317,7 +578,8 @@ class Game {
             this.pacman.reset();
             this.ghosts.forEach(ghost => ghost.reset());
             this.frightenedMode = false;
-            this.showOverlay(`Lives: ${this.lives}`, 'Get ready...', 2000);
+            this.state = 'paused';
+            this.showOverlay(`Lives: ${this.lives}`, 'Press SPACE to continue', 0);
         }
     }
 
@@ -373,8 +635,19 @@ class Game {
                     // Power pellet
                     ctx.fillStyle = '#ffb8ae';
                     ctx.beginPath();
-                    ctx.arc(x + CONFIG.tileSize / 2, y + CONFIG.tileSize / 2, 5, 0, Math.PI * 2);
+                    ctx.arc(x + CONFIG.tileSize / 2, y + CONFIG.tileSize / 2, 6, 0, Math.PI * 2);
                     ctx.fill();
+                } else if (tile === 5) {
+                    // Portal
+                    const time = Date.now() / 200;
+                    const pulse = Math.sin(time) * 0.3 + 0.7;
+                    ctx.fillStyle = `rgba(138, 43, 226, ${pulse})`;
+                    ctx.beginPath();
+                    ctx.arc(x + CONFIG.tileSize / 2, y + CONFIG.tileSize / 2, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
                 }
             }
         }
@@ -410,7 +683,6 @@ class Pacman {
         this.nextDy = 0;
         this.mouthAngle = 0;
         this.mouthSpeed = 0.3;
-        this.mouthOpen = true;
     }
 
     setDirection(dx, dy) {
@@ -434,14 +706,12 @@ class Pacman {
             this.y = newY;
         }
 
-        // Wrap around
-        if (this.x < 0) this.x = map[0].length - 0.5;
-        if (this.x >= map[0].length) this.x = 0.5;
-
         // Animate mouth
-        this.mouthAngle += this.mouthSpeed;
-        if (this.mouthAngle > 0.8 || this.mouthAngle < 0) {
-            this.mouthSpeed = -this.mouthSpeed;
+        if (this.dx !== 0 || this.dy !== 0) {
+            this.mouthAngle += this.mouthSpeed;
+            if (this.mouthAngle > 0.8 || this.mouthAngle < 0) {
+                this.mouthSpeed = -this.mouthSpeed;
+            }
         }
     }
 
@@ -457,7 +727,10 @@ class Pacman {
             const col = Math.floor(cx);
             const row = Math.floor(cy);
             if (row >= 0 && row < map.length && col >= 0 && col < map[0].length) {
-                if (map[row][col] === 0) return false;
+                const tile = map[row][col];
+                if (tile === 0) return false;
+            } else {
+                return false;
             }
         }
         return true;
@@ -533,15 +806,11 @@ class Ghost {
             // Hit a wall, choose new direction
             this.chooseDirection(map, pacman);
         }
-
-        // Wrap around
-        if (this.x < 0) this.x = map[0].length - 0.5;
-        if (this.x >= map[0].length) this.x = 0.5;
     }
 
     chooseDirection(map, pacman) {
         if (this.frightened) {
-            // Random movement when frightened
+            // Random movement when frightened (run away)
             const directions = [[0, -1], [0, 1], [-1, 0], [1, 0]];
             const validDirs = directions.filter(([dx, dy]) =>
                 this.canMove(map, this.x + dx * 0.5, this.y + dy * 0.5)
@@ -565,12 +834,12 @@ class Ghost {
                 targetY = pacman.y + pacman.dy * 4;
             } else if (this.personality === 'patrol') {
                 // Cyan: Patrol corners
-                targetX = this.x > 14 ? 26 : 1;
-                targetY = this.y > 14 ? 25 : 1;
+                targetX = this.x > CONFIG.mapSize / 2 ? CONFIG.mapSize - 2 : 2;
+                targetY = this.y > CONFIG.mapSize / 2 ? CONFIG.mapSize - 2 : 2;
             } else {
                 // Orange: Random/scatter
-                targetX = Math.random() * map[0].length;
-                targetY = Math.random() * map.length;
+                targetX = Math.random() * CONFIG.mapSize;
+                targetY = Math.random() * CONFIG.mapSize;
             }
 
             // Find best direction toward target
@@ -605,6 +874,15 @@ class Ghost {
         return false;
     }
 
+    respawn() {
+        // Teleport back to start after being eaten
+        this.x = this.startX;
+        this.y = this.startY;
+        this.frightened = false;
+        this.dx = 0;
+        this.dy = 0;
+    }
+
     reset() {
         this.x = this.startX;
         this.y = this.startY;
@@ -619,8 +897,9 @@ class Ghost {
         const size = CONFIG.tileSize / 2 - 2;
 
         if (frightenedMode && this.frightened) {
-            // Frightened ghost (blue)
-            ctx.fillStyle = '#2121ff';
+            // Frightened ghost (blue/flashing)
+            const flash = Math.floor(Date.now() / 200) % 2;
+            ctx.fillStyle = flash ? '#2121ff' : '#ffffff';
         } else {
             ctx.fillStyle = this.color;
         }
@@ -638,14 +917,14 @@ class Ghost {
         ctx.closePath();
         ctx.fill();
 
-        // Eyes
-        ctx.fillStyle = '#fff';
-        ctx.beginPath();
-        ctx.arc(x - size * 0.3, y - size * 0.2, size * 0.25, 0, Math.PI * 2);
-        ctx.arc(x + size * 0.3, y - size * 0.2, size * 0.25, 0, Math.PI * 2);
-        ctx.fill();
-
+        // Eyes (if not frightened)
         if (!frightenedMode || !this.frightened) {
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(x - size * 0.3, y - size * 0.2, size * 0.25, 0, Math.PI * 2);
+            ctx.arc(x + size * 0.3, y - size * 0.2, size * 0.25, 0, Math.PI * 2);
+            ctx.fill();
+
             ctx.fillStyle = '#000';
             ctx.beginPath();
             ctx.arc(x - size * 0.3, y - size * 0.2, size * 0.12, 0, Math.PI * 2);
