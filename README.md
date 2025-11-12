@@ -31,7 +31,8 @@ PacNate Blitz transforms classic Pac-Man into an exciting roguelike experience w
 - **Levels 8-10**: 5 ghosts (maximum chaos!)
 
 ### ⚡ **Escalating Difficulty**
-- Speed increases +15% per level for Pac-Man and ghosts
+- Smooth classic 60fps gameplay
+- Speed increases +8% per level (gradual increase)
 - Power pellet duration decreases (-800ms per level, min 2s)
 - Ghost points scale with level (200 × level)
 - Level completion bonus: 500 points per level
@@ -91,16 +92,18 @@ PacNate Blitz transforms classic Pac-Man into an exciting roguelike experience w
 
 ## 🗺️ Map Types
 
-Each map has unique characteristics:
+Each map is fully connected with smooth pathable routes:
 
 1. **Classic Loop**: Simple ring with central obstacles - great for beginners
 2. **Double Loop**: Two connected rings - multiple path choices
 3. **Spiral**: Inward spiral pattern - tricky navigation
-4. **Cross**: Plus-sign layout with portal shortcuts
+4. **Connected Cross**: Symmetrical cross layout with strategic portals
 5. **Diamond**: Diagonal patterns - unique movement flow
-6. **Maze Runner**: Tight corridors - challenging navigation
-7. **Quarters**: Four zones connected by center - strategic play
+6. **Maze Runner**: Simplified connected corridors - strategic movement
+7. **Split Zones**: Two zones linked by portals - portal mastery required
 8. **The Gauntlet**: Long corridors packed with ghosts - test of skill
+
+**Note**: All maps are fully connected and pathable. Map 7 features two zones that require portals to traverse between them, adding strategic teleportation gameplay.
 
 ## 👻 Ghost AI Personalities
 
@@ -224,18 +227,23 @@ Perfect for:
 
 ## 📊 Difficulty Progression
 
+Smooth classic gameplay with gradual difficulty increase:
+
 | Level | Ghosts | Speed Mult | Power Duration | Intensity |
 |-------|--------|------------|----------------|-----------|
 | 1     | 2      | 1.0x       | 8.0s           | ⭐        |
-| 2     | 2      | 1.15x      | 7.2s           | ⭐        |
-| 3     | 3      | 1.3x       | 6.4s           | ⭐⭐      |
-| 4     | 3      | 1.45x      | 5.6s           | ⭐⭐      |
-| 5     | 4      | 1.6x       | 4.8s           | ⭐⭐⭐    |
-| 6     | 4      | 1.75x      | 4.0s           | ⭐⭐⭐    |
-| 7     | 4      | 1.9x       | 3.2s           | ⭐⭐⭐⭐  |
-| 8     | 5      | 2.05x      | 2.4s           | ⭐⭐⭐⭐  |
-| 9     | 5      | 2.2x       | 2.0s           | ⭐⭐⭐⭐⭐|
-| 10    | 5      | 2.35x      | 2.0s           | ⭐⭐⭐⭐⭐|
+| 2     | 2      | 1.08x      | 7.2s           | ⭐        |
+| 3     | 3      | 1.16x      | 6.4s           | ⭐⭐      |
+| 4     | 3      | 1.24x      | 5.6s           | ⭐⭐      |
+| 5     | 4      | 1.32x      | 4.8s           | ⭐⭐⭐    |
+| 6     | 4      | 1.40x      | 4.0s           | ⭐⭐⭐    |
+| 7     | 4      | 1.48x      | 3.2s           | ⭐⭐⭐⭐  |
+| 8     | 5      | 1.56x      | 2.4s           | ⭐⭐⭐⭐  |
+| 9     | 5      | 1.64x      | 2.0s           | ⭐⭐⭐⭐⭐|
+| 10    | 5      | 1.72x      | 2.0s           | ⭐⭐⭐⭐⭐|
+
+**Base Speeds**: Pacman: 1.2, Ghosts: 0.95, Frightened: 0.6
+**Speed Increase**: +8% per level (gradual and smooth)
 
 ## 🔮 Future Enhancement Ideas
 
