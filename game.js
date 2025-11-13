@@ -174,6 +174,82 @@ const MAP_TEMPLATES = [
         [0,1,0,1,0,1,0,5,0,1,0,1,0,1,0],
         [0,2,1,1,1,1,1,1,1,1,1,1,1,2,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 9: Checkerboard - Alternating walls create maze-like pattern
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,0,1,1,5,1,1,0,1,1,2,0],
+        [0,1,0,1,0,1,0,4,0,1,0,1,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,1,0,0,1,0,0,0,1,0,0,1,0,0],
+        [0,1,1,1,0,1,1,1,1,1,0,1,1,1,0],
+        [0,1,0,1,0,1,0,4,0,1,0,1,0,1,0],
+        [0,5,1,1,1,1,1,4,1,1,1,1,1,5,0],
+        [0,1,0,1,0,1,0,4,0,1,0,1,0,1,0],
+        [0,1,1,1,0,1,1,1,1,1,0,1,1,1,0],
+        [0,0,1,0,0,1,0,0,0,1,0,0,1,0,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,1,0,1,0,4,0,1,0,1,0,1,0],
+        [0,2,1,1,0,1,1,5,1,1,0,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 10: The Arena - Large open center with perimeter paths
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,1,1,1,1,1,1,1,1,1,2,0],
+        [0,1,0,0,0,0,0,0,0,0,0,0,0,1,0],
+        [0,1,0,1,1,1,1,1,1,1,1,1,0,1,0],
+        [0,1,0,1,4,1,1,1,1,1,4,1,0,1,0],
+        [0,1,0,1,1,1,1,5,1,1,1,1,0,1,0],
+        [0,1,0,1,1,1,1,1,1,1,1,1,0,1,0],
+        [0,5,0,1,1,1,1,4,1,1,1,1,0,5,0],
+        [0,1,0,1,1,1,1,1,1,1,1,1,0,1,0],
+        [0,1,0,1,1,1,1,5,1,1,1,1,0,1,0],
+        [0,1,0,1,4,1,1,1,1,1,4,1,0,1,0],
+        [0,1,0,1,1,1,1,1,1,1,1,1,0,1,0],
+        [0,1,0,0,0,0,0,0,0,0,0,0,0,1,0],
+        [0,2,1,1,1,1,1,1,1,1,1,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 11: Corridors - Long horizontal and vertical paths
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,1,1,1,5,1,1,1,1,1,2,0],
+        [0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,4,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,4,0,1,0,0,0,1,0],
+        [0,5,1,1,1,1,1,4,1,1,1,1,1,5,0],
+        [0,1,0,0,0,1,0,4,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,4,0,1,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+        [0,2,1,1,1,1,1,5,1,1,1,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ],
+
+    // Map 12: The Hub - Central hub with radiating spokes
+    [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,2,1,1,1,1,1,5,1,1,1,1,1,2,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,1,1,0,1,0,1,0,1,0,1,1,1,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,1,0,1,0,4,0,1,0,1,0,1,0],
+        [0,5,1,1,1,1,4,4,4,1,1,1,1,5,0],
+        [0,1,0,1,0,1,0,4,0,1,0,1,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,1,1,0,1,0,1,0,1,0,1,1,1,0],
+        [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        [0,2,1,1,1,1,1,5,1,1,1,1,1,2,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     ]
 ];
 
@@ -211,7 +287,89 @@ class Game {
         this.keys = {};
         this.lastTime = 0;
 
+        // Initialize audio
+        this.initAudio();
+
         this.init();
+    }
+
+    initAudio() {
+        try {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            console.log('Web Audio API not supported');
+            this.audioContext = null;
+        }
+    }
+
+    playSound(type) {
+        if (!this.soundEnabled || !this.audioContext) return;
+
+        const ctx = this.audioContext;
+        const now = ctx.currentTime;
+
+        switch (type) {
+            case 'pellet':
+                // Short beep
+                this.playTone(800, 0.05, 0.1, 'square');
+                break;
+            case 'powerPellet':
+                // Ascending tone
+                this.playTone(400, 0.1, 0.15, 'sine', 800);
+                break;
+            case 'eatGhost':
+                // Descending tone
+                this.playTone(1000, 0.15, 0.2, 'square', 400);
+                break;
+            case 'portal':
+                // Whoosh effect
+                this.playTone(600, 0.1, 0.15, 'sawtooth', 200);
+                break;
+            case 'extraLife':
+                // Fanfare
+                this.playTone(523, 0.1, 0.1);
+                setTimeout(() => this.playTone(659, 0.1, 0.1), 100);
+                setTimeout(() => this.playTone(784, 0.15, 0.15), 200);
+                break;
+            case 'death':
+                // Descending sad tone
+                this.playTone(440, 0.2, 0.3, 'sine', 220);
+                break;
+            case 'levelComplete':
+                // Victory jingle
+                this.playTone(523, 0.1, 0.1);
+                setTimeout(() => this.playTone(659, 0.1, 0.1), 100);
+                setTimeout(() => this.playTone(784, 0.1, 0.1), 200);
+                setTimeout(() => this.playTone(1047, 0.2, 0.2), 300);
+                break;
+        }
+    }
+
+    playTone(freq, duration, volume = 0.1, type = 'sine', endFreq = null) {
+        if (!this.audioContext) return;
+
+        const ctx = this.audioContext;
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+
+        oscillator.type = type;
+        oscillator.frequency.value = freq;
+
+        // Frequency sweep if endFreq provided
+        if (endFreq) {
+            oscillator.frequency.linearRampToValueAtTime(endFreq, ctx.currentTime + duration);
+        }
+
+        // Envelope
+        gainNode.gain.value = 0;
+        gainNode.gain.linearRampToValueAtTime(volume, ctx.currentTime + 0.01);
+        gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+
+        oscillator.start(ctx.currentTime);
+        oscillator.stop(ctx.currentTime + duration);
     }
 
     loadHighScore() {
@@ -375,6 +533,47 @@ class Game {
         document.getElementById('restartBtn').addEventListener('click', () => {
             this.restartGame();
         });
+
+        // Mobile touch controls
+        const dpadButtons = document.querySelectorAll('.dpad-btn');
+        dpadButtons.forEach(btn => {
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const direction = btn.dataset.direction;
+                this.handleMobileInput(direction, true);
+            });
+
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+            });
+
+            // Also support mouse for testing
+            btn.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                const direction = btn.dataset.direction;
+                this.handleMobileInput(direction, true);
+            });
+        });
+    }
+
+    handleMobileInput(direction, active) {
+        // Set direction immediately for responsive feel
+        if (active) {
+            switch (direction) {
+                case 'up':
+                    this.pacman.setDirection(0, -1);
+                    break;
+                case 'down':
+                    this.pacman.setDirection(0, 1);
+                    break;
+                case 'left':
+                    this.pacman.setDirection(-1, 0);
+                    break;
+                case 'right':
+                    this.pacman.setDirection(1, 0);
+                    break;
+            }
+        }
     }
 
     startGame() {
@@ -441,6 +640,7 @@ class Game {
 
         // Add level bonus
         this.score += CONFIG.levelCompletionBonus;
+        this.playSound('levelComplete');
         this.initializeLevel();
         this.showOverlay(`Level ${this.level}!`, `Get ready... ${CONFIG.ghostIncreaseSchedule[this.level - 1]} ghosts incoming!`, 2000);
         setTimeout(() => {
@@ -484,6 +684,7 @@ class Game {
             this.lives++;
             this.nextExtraLifeAt += CONFIG.extraLifeEvery;
             this.updateUI();
+            this.playSound('extraLife');
             this.showOverlay('Extra Life!', `🎉 You earned an extra life at ${this.score} points!`, 1500);
             setTimeout(() => {
                 if (this.state === 'playing') {
@@ -539,7 +740,7 @@ class Game {
 
         // Update Pacman with level-based speed
         const speed = CONFIG.pacmanBaseSpeed + (this.level - 1) * CONFIG.speedIncreasePerLevel;
-        this.pacman.update(this.map, speed);
+        this.pacman.update(this.map, speed, deltaTime);
 
         // Check pellet collision
         const tile = this.getTile(this.pacman.x, this.pacman.y);
@@ -549,6 +750,7 @@ class Game {
             this.pelletsRemaining--;
             this.updateUI();
             this.checkExtraLife();
+            this.playSound('pellet');
         } else if (tile === 2) {
             this.setTile(this.pacman.x, this.pacman.y, 3);
             this.score += CONFIG.pointsPerPowerPellet;
@@ -556,6 +758,7 @@ class Game {
             this.activatePowerMode();
             this.updateUI();
             this.checkExtraLife();
+            this.playSound('powerPellet');
         } else if (tile === 5) {
             // Portal - teleport to another portal (with cooldown to prevent exploit)
             if (this.portalCooldown <= 0) {
@@ -567,7 +770,7 @@ class Game {
         const ghostSpeed = this.frightenedMode ? CONFIG.frightenedGhostSpeed :
                           CONFIG.ghostBaseSpeed + (this.level - 1) * CONFIG.speedIncreasePerLevel * CONFIG.ghostSpeedMultiplier;
         this.ghosts.forEach(ghost => {
-            ghost.update(this.map, this.pacman, ghostSpeed);
+            ghost.update(this.map, this.pacman, ghostSpeed, deltaTime);
 
             // Check ghost collision (only if not invincible)
             if (!this.invincible && this.checkCollision(this.pacman, ghost)) {
@@ -611,6 +814,7 @@ class Game {
                 this.portalCooldown = 500; // 500ms cooldown to prevent exploit
                 this.updateUI();
                 this.checkExtraLife();
+                this.playSound('portal');
             }
         }
     }
@@ -644,12 +848,14 @@ class Game {
         this.score += CONFIG.pointsPerGhost * this.level; // More points at higher levels
         this.updateUI();
         this.checkExtraLife();
+        this.playSound('eatGhost');
         ghost.respawn();
     }
 
     loseLive() {
         this.lives--;
         this.updateUI();
+        this.playSound('death');
 
         if (this.lives <= 0) {
             this.gameOver();
@@ -772,25 +978,28 @@ class Pacman {
         this.nextDy = dy;
     }
 
-    update(map, speed) {
+    update(map, speed, deltaTime) {
+        // Normalize deltaTime to 60fps (16.67ms per frame)
+        const timeMultiplier = deltaTime / 16.67;
+
         // Try to change direction
         if (this.canMove(map, this.x + this.nextDx * 0.1, this.y + this.nextDy * 0.1)) {
             this.dx = this.nextDx;
             this.dy = this.nextDy;
         }
 
-        // Move
-        const newX = this.x + this.dx * speed * 0.05;
-        const newY = this.y + this.dy * speed * 0.05;
+        // Move (framerate-independent)
+        const newX = this.x + this.dx * speed * 0.05 * timeMultiplier;
+        const newY = this.y + this.dy * speed * 0.05 * timeMultiplier;
 
         if (this.canMove(map, newX, newY)) {
             this.x = newX;
             this.y = newY;
         }
 
-        // Animate mouth
+        // Animate mouth (framerate-independent)
         if (this.dx !== 0 || this.dy !== 0) {
-            this.mouthAngle += this.mouthSpeed;
+            this.mouthAngle += this.mouthSpeed * timeMultiplier;
             if (this.mouthAngle > 0.8 || this.mouthAngle < 0) {
                 this.mouthSpeed = -this.mouthSpeed;
             }
@@ -868,18 +1077,21 @@ class Ghost {
         this.moveTimer = 0;
     }
 
-    update(map, pacman, speed) {
-        this.moveTimer++;
+    update(map, pacman, speed, deltaTime) {
+        // Normalize deltaTime to 60fps (16.67ms per frame)
+        const timeMultiplier = deltaTime / 16.67;
 
-        // Update direction every 10 frames
-        if (this.moveTimer >= 10) {
+        this.moveTimer += deltaTime;
+
+        // Update direction every ~167ms (10 frames at 60fps)
+        if (this.moveTimer >= 167) {
             this.moveTimer = 0;
             this.chooseDirection(map, pacman);
         }
 
-        // Move
-        const newX = this.x + this.dx * speed * 0.05;
-        const newY = this.y + this.dy * speed * 0.05;
+        // Move (framerate-independent)
+        const newX = this.x + this.dx * speed * 0.05 * timeMultiplier;
+        const newY = this.y + this.dy * speed * 0.05 * timeMultiplier;
 
         if (this.canMove(map, newX, newY)) {
             this.x = newX;
