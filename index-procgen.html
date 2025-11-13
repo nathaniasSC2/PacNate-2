@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PacNate - Procedural Generation Test Build</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>🎮 PacNate [PROCGEN]</h1>
+            <p class="tagline">Procedural Generation Test Build - Infinite Variety!</p>
+        </header>
+
+        <div class="game-info">
+            <div class="info-item">
+                <span class="label">Score:</span>
+                <span id="score" class="value">0</span>
+            </div>
+            <div class="info-item">
+                <span class="label">High Score:</span>
+                <span id="highScore" class="value">0</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Level:</span>
+                <span id="level" class="value">1</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Lives:</span>
+                <span id="lives" class="value">❤️❤️❤️</span>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="420" height="420"></canvas>
+            <div id="powerTimer" class="power-timer hidden">
+                <div class="power-timer-bar">
+                    <div id="powerTimerFill" class="power-timer-fill"></div>
+                </div>
+                <span id="powerTimerText" class="power-timer-text">⚡ 0.0s</span>
+            </div>
+            <div id="mobileControls" class="mobile-controls">
+                <div class="dpad">
+                    <button class="dpad-btn dpad-up" data-direction="up">▲</button>
+                    <button class="dpad-btn dpad-down" data-direction="down">▼</button>
+                    <button class="dpad-btn dpad-left" data-direction="left">◄</button>
+                    <button class="dpad-btn dpad-right" data-direction="right">►</button>
+                </div>
+            </div>
+            <div id="gameOverlay" class="overlay">
+                <div class="overlay-content">
+                    <h2 id="overlayTitle">PacNate Blitz</h2>
+                    <p id="overlayMessage">Press SPACE to start your run!</p>
+                    <div class="controls-hint">
+                        <p><strong>Procedural Generation Features:</strong></p>
+                        <p>🗺️ Unique generated maps each level</p>
+                        <p>🌀 Teleport through portals</p>
+                        <p>👻 More ghosts as you progress (2-5)</p>
+                        <p>⚡ Faster speeds each level</p>
+                        <p>🏆 Beat all 10 levels to win!</p>
+                        <p><strong style="color: #FFD700;">⚠️ EXPERIMENTAL BUILD</strong></p>
+                        <hr style="margin: 10px 0; border-color: rgba(255,255,255,0.3);">
+                        <p><strong>Controls:</strong></p>
+                        <p>Arrow Keys or WASD • SPACE pause • M toggle sound</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <button id="pauseBtn" class="btn">⏸️ Pause</button>
+            <button id="soundBtn" class="btn">🔊 Sound: ON</button>
+            <button id="restartBtn" class="btn">🔄 Restart</button>
+        </div>
+
+        <footer>
+            <p>Roguelike Pac-Man Blitz - Every run is different!</p>
+        </footer>
+    </div>
+
+    <script src="game-procgen.js"></script>
+</body>
+</html>
