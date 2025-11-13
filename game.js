@@ -6,6 +6,7 @@ const CONFIG = {
     maxLevel: 10, // Win after level 10!
     pacmanBaseSpeed: 1.2, // Classic smooth speed
     ghostBaseSpeed: 0.95, // Slightly slower than Pacman
+    ghostSpeedMultiplier: 0.3, // Ghost speed increases slower than Pacman (was 0.5)
     frightenedGhostSpeed: 0.6, // Slower when vulnerable
     baseFrightenedDuration: 8000, // 8 seconds at level 1
     pointsPerPellet: 10,
@@ -14,9 +15,10 @@ const CONFIG = {
     pointsPerPortal: 25,
     levelCompletionBonus: 500,
     maxLives: 3,
+    extraLifeEvery: 5000, // Award extra life every 5000 points
     speedIncreasePerLevel: 0.08, // Gradual increase
     frightenedDecreasePerLevel: 800,
-    ghostIncreaseSchedule: [2, 2, 3, 3, 4, 4, 4, 5, 5, 5] // ghosts per level
+    ghostIncreaseSchedule: [2, 2, 2, 3, 3, 4, 4, 4, 5, 5] // ghosts per level - smoother progression
 };
 
 // Bite-sized Map Templates with Looping Patterns and Portals
@@ -190,6 +192,7 @@ class Game {
         this.highScore = this.loadHighScore();
         this.level = 1;
         this.lives = CONFIG.maxLives;
+        this.nextExtraLifeAt = CONFIG.extraLifeEvery; // Track when to award extra life
         this.soundEnabled = true;
 
         this.map = null;
@@ -393,6 +396,7 @@ class Game {
         this.score = 0;
         this.level = 1;
         this.lives = CONFIG.maxLives;
+        this.nextExtraLifeAt = CONFIG.extraLifeEvery;
         this.usedMaps = [];
         this.initializeLevel();
         this.state = 'playing';
@@ -430,6 +434,7 @@ class Game {
             // Add completion bonus
             this.score += CONFIG.levelCompletionBonus * CONFIG.maxLevel;
             this.updateUI();
+            this.checkExtraLife();
             this.victory();
             return;
         }
@@ -444,6 +449,7 @@ class Game {
             }
         }, 2000);
         this.updateUI();
+        this.checkExtraLife();
     }
 
     toggleSound() {
@@ -473,6 +479,20 @@ class Game {
         document.getElementById('lives').textContent = '❤️'.repeat(Math.max(0, this.lives));
     }
 
+    checkExtraLife() {
+        if (this.score >= this.nextExtraLifeAt) {
+            this.lives++;
+            this.nextExtraLifeAt += CONFIG.extraLifeEvery;
+            this.updateUI();
+            this.showOverlay('Extra Life!', `🎉 You earned an extra life at ${this.score} points!`, 1500);
+            setTimeout(() => {
+                if (this.state === 'playing') {
+                    this.hideOverlay();
+                }
+            }, 1500);
+        }
+    }
+
     handleInput() {
         if (this.keys['ArrowUp'] || this.keys['w'] || this.keys['W']) {
             this.pacman.setDirection(0, -1);
@@ -499,7 +519,9 @@ class Game {
             if (this.frightenedTimer <= 0) {
                 this.frightenedMode = false;
                 this.ghosts.forEach(ghost => ghost.frightened = false);
+                this.hidePowerTimer();
             }
+            this.updatePowerTimer();
         }
 
         // Update invincibility timer
@@ -526,12 +548,14 @@ class Game {
             this.score += CONFIG.pointsPerPellet;
             this.pelletsRemaining--;
             this.updateUI();
+            this.checkExtraLife();
         } else if (tile === 2) {
             this.setTile(this.pacman.x, this.pacman.y, 3);
             this.score += CONFIG.pointsPerPowerPellet;
             this.pelletsRemaining--;
             this.activatePowerMode();
             this.updateUI();
+            this.checkExtraLife();
         } else if (tile === 5) {
             // Portal - teleport to another portal (with cooldown to prevent exploit)
             if (this.portalCooldown <= 0) {
@@ -539,9 +563,9 @@ class Game {
             }
         }
 
-        // Update Ghosts with level-based speed
+        // Update Ghosts with level-based speed (increases slower than Pacman)
         const ghostSpeed = this.frightenedMode ? CONFIG.frightenedGhostSpeed :
-                          CONFIG.ghostBaseSpeed + (this.level - 1) * CONFIG.speedIncreasePerLevel * 0.5;
+                          CONFIG.ghostBaseSpeed + (this.level - 1) * CONFIG.speedIncreasePerLevel * CONFIG.ghostSpeedMultiplier;
         this.ghosts.forEach(ghost => {
             ghost.update(this.map, this.pacman, ghostSpeed);
 
@@ -586,6 +610,7 @@ class Game {
                 this.score += CONFIG.pointsPerPortal;
                 this.portalCooldown = 500; // 500ms cooldown to prevent exploit
                 this.updateUI();
+                this.checkExtraLife();
             }
         }
     }
@@ -594,12 +619,31 @@ class Game {
         const duration = CONFIG.baseFrightenedDuration - (this.level - 1) * CONFIG.frightenedDecreasePerLevel;
         this.frightenedMode = true;
         this.frightenedTimer = Math.max(duration, 3000); // Minimum 3 seconds for playability
+        this.frightenedDuration = this.frightenedTimer; // Store initial duration for UI percentage
         this.ghosts.forEach(ghost => ghost.frightened = true);
+        this.showPowerTimer();
+    }
+
+    showPowerTimer() {
+        document.getElementById('powerTimer').classList.remove('hidden');
+    }
+
+    hidePowerTimer() {
+        document.getElementById('powerTimer').classList.add('hidden');
+    }
+
+    updatePowerTimer() {
+        const seconds = (this.frightenedTimer / 1000).toFixed(1);
+        const percentage = (this.frightenedTimer / this.frightenedDuration) * 100;
+
+        document.getElementById('powerTimerText').textContent = `⚡ ${seconds}s`;
+        document.getElementById('powerTimerFill').style.width = `${Math.max(0, percentage)}%`;
     }
 
     eatGhost(ghost) {
         this.score += CONFIG.pointsPerGhost * this.level; // More points at higher levels
         this.updateUI();
+        this.checkExtraLife();
         ghost.respawn();
     }
 
