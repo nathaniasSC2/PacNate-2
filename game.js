@@ -187,7 +187,7 @@ class Game {
 
         this.state = 'start'; // start, playing, paused, gameover, victory
         this.score = 0;
-        this.highScore = parseInt(localStorage.getItem('pacnate-highscore')) || 0;
+        this.highScore = this.loadHighScore();
         this.level = 1;
         this.lives = CONFIG.maxLives;
         this.soundEnabled = true;
@@ -201,11 +201,31 @@ class Game {
         this.frightenedMode = false;
         this.frightenedTimer = 0;
         this.usedMaps = []; // Track which maps have been used this run
+        this.portalCooldown = 0; // Prevent portal exploit
+        this.invincible = false; // Prevent lives race condition
+        this.invincibleTimer = 0;
 
         this.keys = {};
         this.lastTime = 0;
 
         this.init();
+    }
+
+    loadHighScore() {
+        try {
+            return parseInt(localStorage.getItem('pacnate-highscore')) || 0;
+        } catch (e) {
+            // Private browsing or localStorage disabled
+            return 0;
+        }
+    }
+
+    saveHighScore() {
+        try {
+            localStorage.setItem('pacnate-highscore', this.highScore);
+        } catch (e) {
+            // Private browsing or localStorage disabled - silently fail
+        }
     }
 
     init() {
@@ -384,7 +404,7 @@ class Game {
         this.state = 'gameover';
         if (this.score > this.highScore) {
             this.highScore = this.score;
-            localStorage.setItem('pacnate-highscore', this.highScore);
+            this.saveHighScore();
             this.showOverlay('Game Over!', `New High Score: ${this.highScore}! Press SPACE to restart`);
         } else {
             this.showOverlay('Game Over!', `Score: ${this.score}. Press SPACE to restart`);
@@ -396,7 +416,7 @@ class Game {
         this.state = 'victory';
         if (this.score > this.highScore) {
             this.highScore = this.score;
-            localStorage.setItem('pacnate-highscore', this.highScore);
+            this.saveHighScore();
         }
         this.showOverlay('🏆 VICTORY! 🏆', `You beat all ${CONFIG.maxLevel} levels! Score: ${this.score}. Press SPACE to play again!`);
         this.updateUI();
@@ -482,6 +502,19 @@ class Game {
             }
         }
 
+        // Update invincibility timer
+        if (this.invincible) {
+            this.invincibleTimer -= deltaTime;
+            if (this.invincibleTimer <= 0) {
+                this.invincible = false;
+            }
+        }
+
+        // Update portal cooldown
+        if (this.portalCooldown > 0) {
+            this.portalCooldown -= deltaTime;
+        }
+
         // Update Pacman with level-based speed
         const speed = CONFIG.pacmanBaseSpeed + (this.level - 1) * CONFIG.speedIncreasePerLevel;
         this.pacman.update(this.map, speed);
@@ -500,8 +533,10 @@ class Game {
             this.activatePowerMode();
             this.updateUI();
         } else if (tile === 5) {
-            // Portal - teleport to another portal
-            this.usePortal();
+            // Portal - teleport to another portal (with cooldown to prevent exploit)
+            if (this.portalCooldown <= 0) {
+                this.usePortal();
+            }
         }
 
         // Update Ghosts with level-based speed
@@ -510,8 +545,8 @@ class Game {
         this.ghosts.forEach(ghost => {
             ghost.update(this.map, this.pacman, ghostSpeed);
 
-            // Check ghost collision
-            if (this.checkCollision(this.pacman, ghost)) {
+            // Check ghost collision (only if not invincible)
+            if (!this.invincible && this.checkCollision(this.pacman, ghost)) {
                 if (this.frightenedMode && ghost.frightened) {
                     this.eatGhost(ghost);
                 } else if (!ghost.frightened) {
@@ -549,6 +584,7 @@ class Game {
                 this.pacman.x = targetPortal.x;
                 this.pacman.y = targetPortal.y;
                 this.score += CONFIG.pointsPerPortal;
+                this.portalCooldown = 500; // 500ms cooldown to prevent exploit
                 this.updateUI();
             }
         }
@@ -557,7 +593,7 @@ class Game {
     activatePowerMode() {
         const duration = CONFIG.baseFrightenedDuration - (this.level - 1) * CONFIG.frightenedDecreasePerLevel;
         this.frightenedMode = true;
-        this.frightenedTimer = Math.max(duration, 2000); // Minimum 2 seconds
+        this.frightenedTimer = Math.max(duration, 3000); // Minimum 3 seconds for playability
         this.ghosts.forEach(ghost => ghost.frightened = true);
     }
 
@@ -578,6 +614,8 @@ class Game {
             this.pacman.reset();
             this.ghosts.forEach(ghost => ghost.reset());
             this.frightenedMode = false;
+            this.invincible = true;
+            this.invincibleTimer = 2000; // 2 second invincibility to prevent race condition
             this.state = 'paused';
             this.showOverlay(`Lives: ${this.lives}`, 'Press SPACE to continue', 0);
         }
@@ -897,8 +935,8 @@ class Ghost {
         const size = CONFIG.tileSize / 2 - 2;
 
         if (frightenedMode && this.frightened) {
-            // Frightened ghost (blue/flashing)
-            const flash = Math.floor(Date.now() / 200) % 2;
+            // Frightened ghost (blue/flashing at 2Hz to prevent seizure risk)
+            const flash = Math.floor(Date.now() / 500) % 2;
             ctx.fillStyle = flash ? '#2121ff' : '#ffffff';
         } else {
             ctx.fillStyle = this.color;
